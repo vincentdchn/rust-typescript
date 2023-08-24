@@ -1,9 +1,17 @@
+enum Color {
+    Red,
+    Green,
+    Blue,
+}
+
+fn print_color(color: Color) {
+    match color {
+        Color::Blue => println!("Blue"),
+        Color::Red => println!("Red"),
+        Color::Green => println!("Green"),
+    }
+}
+
 fn main() {
-    let file = std::fs::read_to_string("lines").unwrap();
-    file.lines()
-        .enumerate()
-        .filter(|(idx, _)| idx % 2 == 0)
-        .skip(2)
-        .take(2)
-        .for_each(|(_, line)| println!("{}", line));
+    print_color(Color::Blue)
 }
