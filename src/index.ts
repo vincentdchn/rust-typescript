@@ -1,7 +1,2 @@
-import fs from 'fs';
-
-fs.readFileSync('lines')
-    .toString()
-    .split('\n')
-    .filter((_, i) => i % 2 === 0)
-    .forEach((line) => console.log(line));
+const foo = (param: number | undefined): number | undefined =>
+    param ? param * 5 : undefined;

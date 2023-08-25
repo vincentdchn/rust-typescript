@@ -1,22 +1,5 @@
-struct Custom {
-    age: usize,
-    name: String,
+fn multiply(num: Option<usize>) -> Option<usize> {
+    return Some(num? * 5);
 }
 
-enum Item {
-    Number(usize),
-    String(String),
-    MyCustom(Custom),
-}
-
-fn append(items: &mut Vec<Item>) {
-    items.push(Item::String("Hello Fem".into()))
-}
-
-fn main() {
-    let mut items: Vec<Item> = vec![];
-    append(&mut items);
-
-    // let mut items: Vec<usize> = vec![]; <----- Not Possible
-    // append(&mut items);
-}
+fn main() {}
