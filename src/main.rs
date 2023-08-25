@@ -1,5 +1,5 @@
-fn multiply(num: Option<usize>) -> Option<usize> {
-    return Some(num? * 5);
+fn multiply(nums: Vec<usize>, index: usize) -> usize {
+    return nums.get(index).unwrap_or(&index) * 5;
 }
 
 fn main() {}

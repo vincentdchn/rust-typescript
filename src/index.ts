@@ -1,2 +1,3 @@
-const foo = (param: number | undefined): number | undefined =>
-    param ? param * 5 : undefined;
+const practice = (values: number[], idx: number): number => {
+    return (values[idx] ?? idx) * 5;
+};
