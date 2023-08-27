@@ -11,7 +11,10 @@ fn print_all(items: &Vec<Item>) {
 
 fn main() {
     let mut items = vec![Item { count: 1 }];
-    let first = items.first_mut();
+
+    let first = items.get_mut(0);
     println!("{:?}", first);
-    print_all(&mut items);
+
+    let second = items.get_mut(1);
+    println!("{:?}", second);
 }
