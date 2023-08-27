@@ -1,7 +1,6 @@
 mod shapes;
-use shapes::{Area, Circle, Rect};
-// We need to import the Area trait if we want to use it from a Struc that implements the trait.
-// This means the implementation of the Area trait for f64 is safe and not applied to all the code base.
+
+use crate::shapes::{area::Area, circle::Circle, rect::Rect};
 
 fn main() {
     let rect = Rect {
