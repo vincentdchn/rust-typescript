@@ -1,6 +1,9 @@
 use std::fmt::Display;
 
-use super::{area::Area, circle::Circle, collisions::Collidable};
+use super::{
+    area::Area,
+    collisions::{Contains, Points},
+};
 
 pub struct Rect {
     pub x: f64,
@@ -9,26 +12,21 @@ pub struct Rect {
     pub height: f64,
 }
 
-impl Rect {
-    pub fn contains_point(&self, (x, y): (f64, f64)) -> bool {
+impl Contains for Rect {
+    fn contains_point(&self, (x, y): (f64, f64)) -> bool {
         return self.x <= x && self.x + self.width >= x && self.y <= y && self.y + self.height >= y;
     }
 }
 
-impl Collidable<Rect> for Rect {
-    fn collide(&self, other: &Rect) -> bool {
-        for point in other {
-            if self.contains_point(point) {
-                return true;
-            }
-        }
-        return false;
-    }
-}
-
-impl Collidable<Circle> for Rect {
-    fn collide(&self, other: &Circle) -> bool {
-        return self.contains_point((other.x, other.y));
+impl Points for Rect {
+    fn points(&self) -> super::collisions::PointIter {
+        return vec![
+            (self.x, self.y),
+            (self.x + self.width, self.y),
+            (self.x, self.y + self.height),
+            (self.x + self.width, self.y + self.height),
+        ]
+        .into();
     }
 }
 
@@ -56,73 +54,5 @@ impl Display for Rect {
             "Rectangle({}, {}):  {} x {}",
             self.x, self.y, self.width, self.height
         );
-    }
-}
-
-pub struct RectIter {
-    points: Vec<(f64, f64)>,
-    idx: usize,
-}
-
-impl Iterator for RectIter {
-    type Item = (f64, f64);
-
-    fn next(&mut self) -> Option<Self::Item> {
-        let idx = self.idx;
-        self.idx += 1;
-
-        return self.points.get(idx).map(|x| *x);
-    }
-}
-
-impl From<&Rect> for RectIter {
-    fn from(value: &Rect) -> Self {
-        return RectIter {
-            points: vec![
-                (value.x, value.y),
-                (value.x + value.width, value.y),
-                (value.x, value.y + value.height),
-                (value.x + value.width, value.y + value.height),
-            ],
-            idx: 0,
-        };
-    }
-}
-
-// OR
-
-impl RectIter {
-    fn new(rect: &Rect) -> Self {
-        return RectIter {
-            points: vec![
-                (rect.x, rect.y),
-                (rect.x + rect.width, rect.y),
-                (rect.x, rect.y + rect.height),
-                (rect.x + rect.width, rect.y + rect.height),
-            ],
-            idx: 0,
-        };
-    }
-}
-
-impl IntoIterator for Rect {
-    type Item = (f64, f64);
-
-    type IntoIter = RectIter;
-
-    fn into_iter(self) -> Self::IntoIter {
-        return RectIter::new(&self);
-    }
-}
-
-// OR
-
-impl IntoIterator for &Rect {
-    type Item = (f64, f64);
-
-    type IntoIter = RectIter;
-
-    fn into_iter(self) -> Self::IntoIter {
-        return self.into();
     }
 }

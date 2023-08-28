@@ -20,4 +20,5 @@ fn main() {
 
     rect.collide(&rect2);
     circle.collide(&circle2);
+    rect.collide(&circle);
 }
